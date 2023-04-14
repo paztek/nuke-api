@@ -6,7 +6,11 @@ const checkMasterCode = require('../middlewares/check-master-code');
 const getCity = require('../middlewares/get-city');
 
 router.get('', checkMasterCode, function (req, res) {
-    return res.json(cities);
+    return res.json(
+        cities.map(function (city) {
+            return _.omit(city, ['status', 'casualties']);
+        }),
+    );
 });
 
 router.get('/:id', checkMasterCode, getCity, function (req, res) {
